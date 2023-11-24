@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  dataset_path: /shared/apps/datasets/2023_spotify_ds1.csv
+metadata:
+  name: dataset-config
+  namespace: jonatassantos

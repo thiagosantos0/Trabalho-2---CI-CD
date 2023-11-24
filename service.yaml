@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: thiago-container-recommender-service
+spec:
+  selector:
+    app: thiago-frontend-app
+  ports:
+    - protocol: TCP
+      port: 32214 
+      targetPort: 32214

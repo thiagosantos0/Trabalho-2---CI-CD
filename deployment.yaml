@@ -1,0 +1,90 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thiago-frontcontainer-recommender
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: thiago-frontend-app
+  template:
+    metadata:
+      labels:
+        app: thiago-frontend-app
+    spec:
+      volumes:
+        - name: shared-storage
+          persistentVolumeClaim:
+           claimName: project2-pvc-thiagosantos
+      containers:
+      - name: thiagosantos-frontend-app
+        imagePullPolicy: Always
+        image: quay.io/adesk5/frontend-container-recommender
+        volumeMounts:
+                - mountPath: "/shared"
+                  name: shared-storage
+        ports:
+        - containerPort: 32214
+        env:
+        - name: dataset_path
+          valueFrom:
+            configMapKeyRef:
+              name: dataset-config
+              key: dataset_path
+        - name: image_tag
+          valueFrom:
+            configMapKeyRef:
+              name: image-tag-config
+              key: image_tag
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thiagosantos-mlcontainer-recommender
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: thiagosantos-ml-app
+  template:
+    metadata:
+      labels:
+        app: thiagosantos-ml-app
+    spec:
+      volumes:
+        - name: shared-storage
+          persistentVolumeClaim:
+           claimName: project2-pvc-thiagosantos
+      containers:
+      - name: thiagosantos-ml-app
+        imagePullPolicy: Always 
+        image: quay.io/adesk5/ml-container-recommender
+        volumeMounts:
+                - mountPath: "/shared"
+                  name: shared-storage
+        ports:
+        - containerPort: 32214
+        env: 
+        - name: dataset_path
+          valueFrom:
+            configMapKeyRef:
+              name: dataset-config
+              key: dataset_path
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: project2-pvc-thiagosantos
+spec:
+ accessModes:
+   - ReadWriteMany
+ storageClassName: standard
+ resources:
+   requests:
+     storage: 1Gi
+ volumeName: project2-pv-thiagosantos
+---
