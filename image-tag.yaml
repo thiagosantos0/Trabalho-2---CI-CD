@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 data:
-  image_tag: eee1b8d
+  image_tag: ede2f8e
 metadata:
   name: image-tag-config
   namespace: thiagosantos
