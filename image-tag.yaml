@@ -4,4 +4,4 @@ data:
   image_tag: v1.0.0
 metadata:
   name: image-tag-config
-  namespace: jonatassantos
+  namespace: thiagosantos
