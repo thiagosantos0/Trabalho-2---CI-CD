@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: thiago-frontcontainer-recommender
+  name: thiago-frontcontainer-recommender-2
 spec:
   replicas: 2
   selector:
